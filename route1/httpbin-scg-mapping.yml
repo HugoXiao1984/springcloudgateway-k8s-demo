@@ -1,0 +1,9 @@
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGatewayMapping
+metadata:
+  name: httpbin-uuid-routes
+spec:
+  gatewayRef:
+    name: scg-demo
+  routeConfigRef:
+    name: httpbin-uuid-route-config

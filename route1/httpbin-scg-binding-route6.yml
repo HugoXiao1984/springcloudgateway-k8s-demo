@@ -1,0 +1,36 @@
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGatewayRouteConfig
+metadata:
+  name: httpbin-uuid-route-config
+spec:
+  routes:
+    - predicates:
+        - Path=/api/demo/**
+        - Host=**.winterfell.be
+        - Method=GET
+        - Weight=group1, 5
+      uri: http://httpbin.org
+      filters:
+        - SetPath=/uuid
+      tags:
+        - api
+      title: "To test scg to forward uuid request to httpbin/uuid with {weight}"
+      description: "httpbin endpoint uuid testcase with {weight}"
+    - predicates:
+        - Path=/api/demo/{delay}
+        - Host=**.winterfell.be
+        - Method=GET
+        - Weight=group1, 5
+      uri: http://httpbin.org
+      filters:
+        - SetPath=/drip
+       # duration=2&delay=1&code=200&numbytes=10
+        - AddRequestParameter=duration, 0
+        - AddRequestParameter=delay, {delay}
+        - AddRequestParameter=code, 200
+        - AddRequestParameter=numbytes, 10
+      tags:
+        - api
+      title: "To test scg to forward demo {delay} request to httpbin/drip with {weight}"
+      description: "httpbin endpoint /drip testcase with {weight}"
+

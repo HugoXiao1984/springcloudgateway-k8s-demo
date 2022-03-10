@@ -1,0 +1,57 @@
+apiVersion: "tanzu.vmware.com/v1"
+kind: SpringCloudGatewayRouteConfig
+metadata:
+  name: httpbin-uuid-route-config
+spec:
+  routes:
+    - predicates:
+        - Path=/api/demo
+        - Host=**.winterfell.be
+        - Method=GET
+      uri: http://httpbin.org
+      filters:
+        - SetPath=/uuid
+      tags:
+        - api
+      title: "To test scg to forward uuid request to httpbin/uuid"
+      description: "httpbin endpoint uuid testcase"
+    - predicates:
+        - Path=/api/demo/{deplay}
+        - Host=**.winterfell.be
+        - Method=GET
+      uri: http://httpbin.org
+      filters:
+        - SetPath=/drip
+       # duration=2&delay=1&code=200&numbytes=10
+        - AddRequestParameter=duration, 0
+        - AddRequestParameter=delay, {deplay}
+        - AddRequestParameter=code, 200
+        - AddRequestParameter=numbytes, 10
+        - CircuitBreaker=myCircuitBreaker, forward:/api/fallback
+      tags:
+        - api
+      title: "To test scg to forward uuid request to httpbin/drip with delays"
+      description: "httpbin endpoint httpbin/drip testcase"
+    - predicates:
+        - Path=/api/fallback
+      uri: http://httpbin.org
+      filters:
+        - SetPath=/uuid
+        - FallbackHeaders
+      tags:
+        - fallback
+      title: "To test scg to forward failed request to interal fallback"
+      description: "httpbin endpoint uuid testcase while failed behavior"    
+    - predicates:
+        - Path=/api/trial
+        - Host=**.winterfell.be
+        - Method=GET
+      uri: http://httpbin.org
+      filters:
+        - SetPath=/uuid
+        - RateLimit=1, 10s
+      tags:
+        - api
+      title: "To test scg to RateLimit request to httpbin/uuid"
+      description: "httpbin endpoint uuid testcase with RateLimit"
+
