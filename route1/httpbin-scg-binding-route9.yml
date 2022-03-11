@@ -13,7 +13,7 @@ spec:
         - SetPath=/uuid
       tags:
         - api
-      title: "To test scg to forward uuid request to httpbin/uuid"
+      title: "To test gac to forward uuid request to httpbin/uuid"
       description: "httpbin endpoint uuid testcase"
     - predicates:
         - Path=/api/demo/{deplay}
@@ -30,7 +30,7 @@ spec:
         - CircuitBreaker=myCircuitBreaker, forward:/api/fallback
       tags:
         - api
-      title: "To test scg to forward uuid request to httpbin/drip with delays"
+      title: "To test gac to forward uuid request to httpbin/drip with delays"
       description: "httpbin endpoint httpbin/drip testcase"
     - predicates:
         - Path=/api/fallback
@@ -40,7 +40,7 @@ spec:
         - FallbackHeaders
       tags:
         - fallback
-      title: "To test scg to forward failed request to interal fallback"
+      title: "To test gac to forward failed request to interal fallback"
       description: "httpbin endpoint uuid testcase while failed behavior"    
     - predicates:
         - Path=/api/trial
@@ -52,6 +52,6 @@ spec:
         - RateLimit=1, 10s
       tags:
         - api
-      title: "To test scg to RateLimit request to httpbin/uuid"
+      title: "To test gac to RateLimit request to httpbin/uuid"
       description: "httpbin endpoint uuid testcase with RateLimit"
 
