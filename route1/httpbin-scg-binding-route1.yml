@@ -9,6 +9,6 @@ spec:
       uri: http://httpbin.org
       tags:
         - api
-      title: "To test scg to forward uuid request to httpbin/uuid"
+      title: "To test gac to forward uuid request to httpbin/uuid"
       description: "httpbin endpoint uuid testcase"
 
