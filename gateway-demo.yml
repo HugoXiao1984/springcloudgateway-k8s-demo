@@ -1,11 +1,11 @@
 apiVersion: "tanzu.vmware.com/v1"
 kind: SpringCloudGateway
 metadata:
-  name: scg-demo
-  namespace: scg-demo
+  name: gac-demo
+  namespace: gac-demo
 spec:
   api:
-    serverUrl: https://scg-demo.dragonstone.tkg-aws-e2-lab.winterfell.be
+    serverUrl: https://gac-demo.dragonstone.tkg-aws-e2-lab.winterfell.be
     title: "Httpbin demo"
     description: "Sample application for Spring Cloud Gateway commercial product demos."
     documentation: "https://github.com/spring-cloud-services-samples/animal-rescue/"
@@ -27,25 +27,25 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: scg-demo
-  namespace: scg-demo
+  name: gac-demo
+  namespace: gac-demo
   labels:
-    app: scg-demo
-  annotations:
-    ingress.kubernetes.io/force-ssl-redirect: "true"
-    kubernetes.io/ingress.class: contour
+    app: gac-demo
+#  annotations:
+#    ingress.kubernetes.io/force-ssl-redirect: "true"
+#    kubernetes.io/ingress.class: contour
 spec:
-  tls:
-  - secretName: scg-demo-cert-tls
-    hosts:
-    - "scg-demo.dragonstone.tkg-aws-e2-lab.winterfell.be"
+#  tls:
+#  - secretName: gac-demo-cert-tls
+#    hosts:
+#    - "gac-demo.dragonstone.tkg-aws-e2-lab.winterfell.be"
   rules:
-  - host: scg-demo.dragonstone.tkg-aws-e2-lab.winterfell.be
+  - host: gac-demo.dragonstone.tkg-aws-e2-lab.winterfell.be
     http:
       paths:
       - backend:
           service:
-            name: scg-demo
+            name: gac-demo
             port:
               number: 80
         pathType: ImplementationSpecific
