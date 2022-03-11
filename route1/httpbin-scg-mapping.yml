@@ -4,6 +4,6 @@ metadata:
   name: httpbin-uuid-routes
 spec:
   gatewayRef:
-    name: scg-demo
+    name: gac-demo
   routeConfigRef:
     name: httpbin-uuid-route-config
